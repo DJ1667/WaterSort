@@ -25,7 +25,10 @@ public class WaterSort
         {
             var min = openList.Pop();
             count++;
-
+            if (count > 10000)
+            {
+                break;
+            }
             //------------------Test----------------
             // string path = "";
             // List<BottleTransition> tempResultList = new List<BottleTransition>();
@@ -86,6 +89,7 @@ public class WaterSort
         stopwatch.Stop();
         Debug.Log("总共耗时: " + stopwatch.ElapsedMilliseconds + "ms");
         // 无解
+        Debug.Log($"------------------计算了{count}次---------------------");
         return null;
     }
 
