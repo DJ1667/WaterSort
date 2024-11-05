@@ -130,6 +130,28 @@ public class BottleState
         return true;
     }
 
+    public bool PourOut(int from, int to, ref int num)
+    {
+        var pourOut = bottles[from];
+        var pourIn = bottles[to];
+
+        if (pourOut.IsEmpty) return false;
+        if (pourIn.IsFull) return false;
+        if (!pourIn.IsEmpty && !pourOut.GetTopColor().Equals(pourIn.GetTopColor())) return false;
+
+        // Debug.Log($"from: {from + 1}  to: {to + 1}  | pourOutColor: {pourOut.GetTopColor()} pourInColor: {pourIn.GetTopColor()}");
+
+        pourOut.PourOut(pourIn);
+        num++;
+
+        // 递归倒入(相同颜色全部倒入)
+        while (PourOut(from, to, ref num))
+        {
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// 强制回退之前的倒出操作
     /// </summary>

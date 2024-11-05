@@ -94,8 +94,10 @@ public class WaterSort
         List<BottleTransition> options = new List<BottleTransition>();
 
         var bottleNum = currentTransition.doneState.bottles.Length;
-
         HashSet<string> optionsHash = new HashSet<string>();
+
+        var tempBottleState = currentTransition.doneState.Clone();
+        int tempPortoutNum = 0;
         for (int i = 0; i < bottleNum; i++)
         {
             for (int j = 0; j < bottleNum; j++)
@@ -104,18 +106,28 @@ public class WaterSort
 
                 if (currentTransition.doneState.IsCanPourOut(i, j))
                 {
-                    var newTransition = currentTransition.Clone();
-                    newTransition.parent = currentTransition;
-                    newTransition.doneState.PourOut(i, j);
-                    newTransition.fromBottleIndex = i;
-                    newTransition.toBottleIndex = j;
-                    newTransition.step++;
-                    newTransition.UpdateTransition();
-                    if (!optionsHash.Contains(newTransition.stateHash))
+                    // 计算倒出后的状态是否已经存在
+                    tempPortoutNum = 0;
+                    tempBottleState.PourOut(i, j, ref tempPortoutNum);
+                    var tempHash = tempBottleState.CalculateHashString();
+                    var tempComplexity = tempBottleState.CalculateComplexity();
+
+                    if (!optionsHash.Contains(tempHash))
                     {
+                        var newTransition = currentTransition.Clone();
+                        newTransition.parent = currentTransition;
+                        newTransition.doneState.PourOut(i, j);
+                        newTransition.fromBottleIndex = i;
+                        newTransition.toBottleIndex = j;
+                        newTransition.step++;
+                        newTransition.UpdateTransition(tempHash, tempComplexity);
+
                         optionsHash.Add(newTransition.stateHash);
                         options.Add(newTransition);
                     }
+
+                    //还原临时状态
+                    tempBottleState.ForceBackPourOut(i, j, tempPortoutNum);
                 }
             }
         }
