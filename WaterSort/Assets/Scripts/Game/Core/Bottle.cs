@@ -9,7 +9,8 @@ using Debug = UnityEngine.Debug;
 public class Bottle
 {
     private int segment = 3;
-    public Stack<string> colorStack = new Stack<string>();
+    private Stack<string> colorStack = new Stack<string>();
+    public Stack<string> ColorStack => colorStack;
 
     public string[] colors => colorStack.ToArray();
 
@@ -209,6 +210,11 @@ public class BottleState
 
     public int CalculateComplexity()
     {
+        return CalculateComplexity2();
+    }
+
+    public int CalculateComplexity1()
+    {
         if (bottles == null || bottles.Length == 0)
         {
             return 0; // 没有瓶子，复杂度为0
@@ -219,6 +225,37 @@ public class BottleState
         foreach (var bottle in bottles)
         {
             totalComplexity += bottle.CalculateComplexity();
+        }
+
+        return totalComplexity;
+    }
+
+    public int CalculateComplexity2()
+    {
+        int totalComplexity = 0;
+
+        foreach (var bottle in bottles)
+        {
+            if (bottle.ColorCount == 0) continue;
+
+            int complexity = 1;
+            var preColor = bottle.GetTopColor();
+            bool isAllSameColor = true;
+
+            foreach (var color in bottle.ColorStack)
+            {
+                if (!color.Equals(preColor))
+                {
+                    complexity++;
+                    isAllSameColor = false;
+                    preColor = color;
+                }
+            }
+
+            if (isAllSameColor && bottle.IsFull)
+                complexity -= 1;
+
+            totalComplexity += complexity;
         }
 
         return totalComplexity;

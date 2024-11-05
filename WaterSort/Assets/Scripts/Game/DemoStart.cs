@@ -10,61 +10,6 @@ public class DemoStart : MonoBehaviour
     void Start()
     {
         // LevelController.Instance.LoadLevel();
-
-        BottleState bottleState = new BottleState()
-        {
-            segmentMax = 5,
-            bottles = new Bottle[]
-            {
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "bbb", Random.Range(10000,99999).ToString(),})
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                    colorStack = new Stack<string>(new string[] { "aaa", "123", Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                      colorStack = new Stack<string>(new string[] { "cccc", "das", Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "bbbb", "blue", Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "bbbb", "blue", Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "sad","bbbb", "blue",Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "bbbb", "blue", Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "bbbb", "blue", Random.Range(10000,99999).ToString() })
-                },
-                new Bottle()
-                {
-                    Segment = 5,
-                       colorStack = new Stack<string>(new string[] { "dasdaf","dsad","bbbb", "blue",Random.Range(10000,99999).ToString() })
-                }
-            }
-        };
-
-        Debug.Log(bottleState.CalculateHashString());
     }
 
     // Update is called once per frame
