@@ -206,7 +206,6 @@ public class LevelConfig : SerializedScriptableObject
     public void CheckLevel()
     {
         BottleState bottleState = new BottleState();
-        bottleState.segmentMax = SegmentMax;
         bottleState.bottles = new Bottle[BottleList.Count];
         for (int i = 0; i < BottleList.Count; i++)
         {

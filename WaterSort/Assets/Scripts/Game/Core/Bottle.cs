@@ -6,8 +6,17 @@ using System.Linq;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
+public enum BottleType
+{
+    Normal,
+    Temp,
+    SingleColor,
+}
+
 public class Bottle
 {
+    public BottleType bottleType = BottleType.Normal;
+    public string BottleColor = null;
     private int segment = 3;
     private Stack<string> colorStack = new Stack<string>();
     public Stack<string> ColorStack => colorStack;
@@ -83,16 +92,46 @@ public class Bottle
     /// 倒出颜色
     /// </summary>
     /// <param name="bottle"></param>
-    public void PourOut(Bottle bottle)
+    public bool PourOut(Bottle bottle)
     {
-        if (colorStack.Count == 0)
-        {
-            Debug.LogError("倒出颜色失败，当前瓶子为空");
-            return;
-        }
+        if (!IsCanPourOut(bottle)) return false;
 
         var color = colorStack.Pop();
         bottle.PoruIn(color);
+
+        // 递归倒入(相同颜色全部倒入)
+        while (PourOut(bottle))
+        {
+        }
+
+        return true;
+    }
+
+    public bool PourOut(Bottle bottle, ref int num)
+    {
+        if (!IsCanPourOut(bottle)) return false;
+
+        var color = colorStack.Pop();
+        bottle.PoruIn(color);
+
+        num++;
+
+        // 递归倒入(相同颜色全部倒入)
+        while (PourOut(bottle, ref num))
+        {
+        }
+
+        return true;
+    }
+
+    public bool IsCanPourOut(Bottle bottle)
+    {
+        if (IsEmpty) return false;
+        if (bottle.IsFull) return false;
+        if (!bottle.IsEmpty && !GetTopColor().Equals(bottle.GetTopColor())) return false;
+        if (bottle.bottleType == BottleType.SingleColor && !GetTopColor().Equals(bottle.BottleColor)) return false;
+
+        return true;
     }
 
     /// <summary>
@@ -107,7 +146,6 @@ public class Bottle
 
 public class BottleState
 {
-    public int segmentMax = 3;
     public Bottle[] bottles = null;
 
     public bool PourOut(int from, int to)
@@ -115,20 +153,9 @@ public class BottleState
         var pourOut = bottles[from];
         var pourIn = bottles[to];
 
-        if (pourOut.IsEmpty) return false;
-        if (pourIn.IsFull) return false;
-        if (!pourIn.IsEmpty && !pourOut.GetTopColor().Equals(pourIn.GetTopColor())) return false;
-
         // Debug.Log($"from: {from + 1}  to: {to + 1}  | pourOutColor: {pourOut.GetTopColor()} pourInColor: {pourIn.GetTopColor()}");
 
-        pourOut.PourOut(pourIn);
-
-        // 递归倒入(相同颜色全部倒入)
-        while (PourOut(from, to))
-        {
-        }
-
-        return true;
+        return pourOut.PourOut(pourIn);
     }
 
     public bool PourOut(int from, int to, ref int num)
@@ -136,21 +163,9 @@ public class BottleState
         var pourOut = bottles[from];
         var pourIn = bottles[to];
 
-        if (pourOut.IsEmpty) return false;
-        if (pourIn.IsFull) return false;
-        if (!pourIn.IsEmpty && !pourOut.GetTopColor().Equals(pourIn.GetTopColor())) return false;
-
         // Debug.Log($"from: {from + 1}  to: {to + 1}  | pourOutColor: {pourOut.GetTopColor()} pourInColor: {pourIn.GetTopColor()}");
 
-        pourOut.PourOut(pourIn);
-        num++;
-
-        // 递归倒入(相同颜色全部倒入)
-        while (PourOut(from, to, ref num))
-        {
-        }
-
-        return true;
+        return pourOut.PourOut(pourIn, ref num);
     }
 
     /// <summary>
@@ -174,11 +189,7 @@ public class BottleState
         var pourOut = bottles[from];
         var pourIn = bottles[to];
 
-        if (pourOut.IsEmpty) return false;
-        if (pourIn.IsFull) return false;
-        if (!pourIn.IsEmpty && !pourOut.GetTopColor().Equals(pourIn.GetTopColor())) return false;
-
-        return true;
+        return pourOut.IsCanPourOut(pourIn);
     }
 
     public string CalculateHashString()
@@ -280,7 +291,6 @@ public class BottleState
 
         return new BottleState
         {
-            segmentMax = segmentMax,
             bottles = newBottles,
         };
     }

@@ -20,7 +20,6 @@ public class DemoStart : MonoBehaviour
             // Profiler.BeginSample("WaterSort");
             var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>("Assets/AssetBundle/ScriptableObjects/LevelConfig/LevelConfig1.asset");
             BottleState bottleState = new BottleState();
-            bottleState.segmentMax = levelConfig.SegmentMax;
             bottleState.bottles = new Bottle[levelConfig.BottleList.Count];
             for (int i = 0; i < levelConfig.BottleList.Count; i++)
             {
