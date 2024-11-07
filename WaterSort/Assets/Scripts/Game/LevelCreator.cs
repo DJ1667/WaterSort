@@ -21,7 +21,7 @@ public class LevelCreator : MonoBehaviour
             {
                 bottleType = bottleData.bottleType,
                 Segment = bottleData.Segment,
-                Colors = new List<Color32>(bottleData.Colors)
+                Colors = new List<ColorType>(bottleData.Colors)
             });
         }
 
@@ -97,7 +97,7 @@ public class LevelCreator : MonoBehaviour
             {
                 bottleType = bottleData.bottleType,
                 Segment = bottleData.Segment,
-                Colors = new List<Color32>(bottleData.Colors)
+                Colors = new List<ColorType>(bottleData.Colors)
             });
         }
     }

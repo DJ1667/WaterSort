@@ -60,14 +60,13 @@ public class WaterSort
 
                 resultList.Reverse();
 
-                Debug.Log($"------------------计算了{count}次---------------------");
                 for (int i = 1; i < resultList.Count; i++)
                 {
                     var transition = resultList[i];
-                    Debug.Log($"第 {i} 步：从 {transition.fromBottleIndex + 1} 倒入 {transition.toBottleIndex + 1}");
+                    // Debug.Log($"第 {i} 步：从 {transition.fromBottleIndex + 1} 倒入 {transition.toBottleIndex + 1}");
                 }
                 stopwatch.Stop();
-                Debug.Log("总共耗时: " + stopwatch.ElapsedMilliseconds + "ms");
+                Debug.Log($"<color=green>有解 => 总共耗时: {stopwatch.ElapsedMilliseconds}ms  --------->  计算了{count}次</color>");
 
                 return resultList;
             }
@@ -87,9 +86,8 @@ public class WaterSort
         }
 
         stopwatch.Stop();
-        Debug.Log("总共耗时: " + stopwatch.ElapsedMilliseconds + "ms");
+        Debug.Log($"无解 =>总共耗时: {stopwatch.ElapsedMilliseconds}ms  --------->  计算了{count}次");
         // 无解
-        Debug.Log($"------------------计算了{count}次---------------------");
         return null;
     }
 

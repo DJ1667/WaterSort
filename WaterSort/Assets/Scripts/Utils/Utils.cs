@@ -33,6 +33,12 @@ public static class DUtils
         return result;
     }
 
+    public static T GetRandomElement<T>(List<T> list)
+    {
+        int index = Random.Range(0, list.Count);
+        return list[index];
+    }
+
     /// <summary>
     /// Fisher-Yates 打乱算法，随机打乱列表
     /// </summary>
@@ -1144,6 +1150,575 @@ public static class DUtils
         }
 
         clip.AddEvent(animationEvent);
+    }
+
+    #endregion
+
+    #region Parse
+
+    public static bool ParseToInt(string str, out int val)
+    {
+        if (!int.TryParse(str, out val))
+        {
+            Debug.LogError($"{str} 无法转换为int");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool ParseToLong(string str, out long val)
+    {
+        if (!long.TryParse(str, out val))
+        {
+            Debug.LogError($"{str} 无法转换为long");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool ParseToShort(string str, out short val)
+    {
+        if (!short.TryParse(str, out val))
+        {
+            Debug.LogError($"{str} 无法转换为short");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool ParseToFloat(string str, out float val)
+    {
+        if (!float.TryParse(str, out val))
+        {
+            Debug.LogError($"{str} 无法转换为float");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool ParseToDouble(string str, out double val)
+    {
+        if (!double.TryParse(str, out val))
+        {
+            Debug.LogError($"{str} 无法转换为double");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool ParseToBool(string str, out bool val)
+    {
+        if (!bool.TryParse(str, out val))
+        {
+            Debug.LogError($"{str} 无法转换为bool");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool ParseToVector2(string str, out Vector2 val)
+    {
+        var strArr = str.Split(',');
+        val = Vector2.zero;
+        if (strArr.Length < 2)
+        {
+            Debug.LogError($"{str} 无法转换为Vector2");
+            return false;
+        }
+
+        val.x = float.Parse(strArr[0]);
+        val.y = float.Parse(strArr[1]);
+
+        return true;
+    }
+
+    public static bool ParseToVector3(string str, out Vector3 val)
+    {
+        var strArr = str.Split(',');
+        val = Vector3.zero;
+        if (strArr.Length < 3)
+        {
+            Debug.LogError($"{str} 无法转换为Vector3");
+            return false;
+        }
+
+        val.x = float.Parse(strArr[0]);
+        val.y = float.Parse(strArr[1]);
+        val.z = float.Parse(strArr[2]);
+
+        return true;
+    }
+
+    public static bool ParseToColor(string str, out Color val)
+    {
+        var strArr = str.Split(',');
+        val = Color.black;
+        if (strArr.Length < 4)
+        {
+            Debug.LogError($"{str} 无法转换为Color");
+            return false;
+        }
+
+        val.r = float.Parse(strArr[0]);
+        val.g = float.Parse(strArr[1]);
+        val.b = float.Parse(strArr[2]);
+        val.a = float.Parse(strArr[3]);
+
+        return true;
+    }
+
+    public static bool ParseToColor32(string str, out Color32 val)
+    {
+        var strArr = str.Split(',');
+        val = Color.black;
+        if (strArr.Length < 4)
+        {
+            Debug.LogError($"{str} 无法转换为Color");
+            return false;
+        }
+
+        val.r = byte.Parse(strArr[0]);
+        val.g = byte.Parse(strArr[1]);
+        val.b = byte.Parse(strArr[2]);
+        val.a = byte.Parse(strArr[3]);
+
+        return true;
+    }
+
+    #endregion
+
+    #region TryParse
+
+    public static int ParseToInt(string str)
+    {
+        int result = 0;
+
+        if (!int.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为int, 默认使用0");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static long ParseToLong(string str)
+    {
+        long result = 0;
+
+        if (!long.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为long, 默认使用0");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static short ParseToShort(string str)
+    {
+        short result = 0;
+
+        if (!short.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为short, 默认使用0");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static float ParseToFloat(string str)
+    {
+        float result = 0;
+
+        if (!float.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为float, 默认使用0");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static double ParseToDouble(string str)
+    {
+        double result = 0;
+
+        if (!double.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为double, 默认使用0");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static bool ParseToBool(string str)
+    {
+        bool result = false;
+
+        if (!bool.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为bool, 默认使用false");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static byte ParseToByte(string str)
+    {
+        byte result = 0;
+
+        if (!byte.TryParse(str, out result))
+        {
+            Debug.LogWarning($"{str} 无法转换为byte, 默认使用0");
+            return result;
+        }
+
+        return result;
+    }
+
+    public static Vector2 ParseToVector2(string str)
+    {
+        var strArr = str.Split(',');
+        Vector2 val = Vector2.zero;
+        if (strArr.Length < 2)
+        {
+            Debug.LogWarning($"{str} 无法转换为Vector2, 默认使用Vector2.zero");
+            return val;
+        }
+
+        val.x = float.Parse(strArr[0]);
+        val.y = float.Parse(strArr[1]);
+
+        return val;
+    }
+
+    public static Vector3 ParseToVector3(string str)
+    {
+        var strArr = str.Split(',');
+        Vector3 val = Vector3.zero;
+        if (strArr.Length < 3)
+        {
+            Debug.LogWarning($"{str} 无法转换为Vector3, 默认使用Vector3.zero");
+            return val;
+        }
+
+        val.x = float.Parse(strArr[0]);
+        val.y = float.Parse(strArr[1]);
+        val.z = float.Parse(strArr[2]);
+
+        return val;
+    }
+
+    public static Color ParseToColor(string str)
+    {
+        var strArr = str.Split(',');
+        Color val = Color.black;
+        if (strArr.Length < 4)
+        {
+            Debug.LogWarning($"{str} 无法转换为Color, 默认使用Color.black");
+            return val;
+        }
+
+        val.r = float.Parse(strArr[0]);
+        val.g = float.Parse(strArr[1]);
+        val.b = float.Parse(strArr[2]);
+        val.a = float.Parse(strArr[3]);
+
+        return val;
+    }
+
+    public static Color32 ParseToColor32(string str)
+    {
+        var strArr = str.Split(',');
+        Color32 val = Color.black;
+        if (strArr.Length < 4)
+        {
+            Debug.LogWarning($"{str} 无法转换为Color, 默认使用Color.black");
+            return val;
+        }
+
+        val.r = byte.Parse(strArr[0]);
+        val.g = byte.Parse(strArr[1]);
+        val.b = byte.Parse(strArr[2]);
+        val.a = byte.Parse(strArr[3]);
+
+        return val;
+    }
+
+    public static T ParseToEnum<T>(string str) where T : Enum
+    {
+        if (string.IsNullOrEmpty(str))
+            return (T)default;
+
+        //先校验字符串是否为枚举值(int类型)
+        int intValue;
+        if (int.TryParse(str, out intValue))
+        {
+            if (Enum.IsDefined(typeof(T), intValue))
+                return (T)Enum.ToObject(typeof(T), intValue);
+        }
+
+        //如果不是枚举值，当做枚举名处理
+        try
+        {
+            T t = (T)Enum.Parse(typeof(T), str);
+            if (Enum.IsDefined(typeof(T), t))
+                return t;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("解析枚举错误: " + e);
+        }
+
+        Debug.LogError(string.Format("解析枚举错误 {0} : {1}", typeof(T), str));
+        return (T)default;
+    }
+
+    public static object ParseToEnum(Type t, string str)
+    {
+        object obj = default;
+
+        int intValue;
+        if (int.TryParse(str, out intValue))
+        {
+            obj = Enum.ToObject(t, intValue);
+        }
+
+        //如果不是枚举值，当做枚举名处理
+        try
+        {
+            obj = Enum.Parse(t, str);
+        }
+        catch (Exception e)
+        {
+        }
+
+        return obj;
+    }
+
+    public static int[] ParseToArrayInt(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        int[] array = new int[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToInt(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static float[] ParseToArrayFloat(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        float[] array = new float[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToFloat(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static bool[] ParseToArrayBool(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        bool[] array = new bool[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToBool(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static double[] ParseToArrayDouble(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        double[] array = new double[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToDouble(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static string[] ParseToArrayString(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        string[] array = new string[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = strArr[i];
+        }
+
+        return array;
+    }
+
+    public static byte[] ParseToArrayByte(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        byte[] array = new byte[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToByte(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static short[] ParseToArrayShort(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        short[] array = new short[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToShort(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static long[] ParseToArrayLong(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        long[] array = new long[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToLong(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static Vector2[] ParseToArrayVector2(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        Vector2[] array = new Vector2[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToVector2(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static Vector3[] ParseToArrayVector3(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        Vector3[] array = new Vector3[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToVector3(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static Color[] ParseToArrayColor(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        Color[] array = new Color[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToColor(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static Color32[] ParseToArrayColor32(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        Color32[] array = new Color32[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToColor32(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static T[] ParseToArrayEnum<T>(string str) where T : Enum
+    {
+        if (string.IsNullOrEmpty(str)) return default;
+
+        var strArr = str.Split('|');
+        T[] array = new T[strArr.Length];
+
+        for (int i = 0; i < strArr.Length; i++)
+        {
+            array[i] = ParseToEnum<T>(strArr[i]);
+        }
+
+        return array;
+    }
+
+    public static Array ParseToArrayEnum(Type t, string str)
+    {
+        Array arr = null;
+        if (string.IsNullOrEmpty(str))
+        {
+            arr = Array.CreateInstance(t, 0);
+            return arr;
+        }
+
+        var valArr = str.Split('|');
+        arr = Array.CreateInstance(t, valArr.Length);
+
+        for (int i = 0; i < valArr.Length; i++)
+        {
+            arr.SetValue(ParseToEnum(t, valArr[i]), i);
+        }
+
+        return arr;
     }
 
     #endregion

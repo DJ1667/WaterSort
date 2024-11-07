@@ -18,10 +18,10 @@ public class Bottle
     public BottleType bottleType = BottleType.Normal;
     public string BottleColor = null;
     private int segment = 3;
-    private Stack<string> colorStack = new Stack<string>();
-    public Stack<string> ColorStack => colorStack;
+    private Stack<ColorType> colorStack = new Stack<ColorType>();
+    public Stack<ColorType> ColorStack => colorStack;
 
-    public string[] colors => colorStack.ToArray();
+    public ColorType[] colors => colorStack.ToArray();
 
     public int Segment
     {
@@ -32,17 +32,30 @@ public class Bottle
     public bool IsEmpty => colorStack.Count == 0;
     public bool IsFull => colorStack.Count == segment;
 
+    public Bottle()
+    {
+    }
+
+    public Bottle(BottleType type, int segment, ColorType[] colors = null)
+    {
+        bottleType = type;
+        this.segment = segment;
+
+        if (colors != null)
+        {
+            foreach (var color in colors)
+            {
+                AddColor(color);
+            }
+        }
+    }
+
     public string GetAllColorString()
     {
         return string.Join(",", colorStack);
     }
 
-    public bool AddColor(Color32 color)
-    {
-        return AddColor(color.ToString());
-    }
-
-    public bool AddColor(string color)
+    public bool AddColor(ColorType color)
     {
         if (IsFull) return false;
 
@@ -54,10 +67,10 @@ public class Bottle
     /// 得到瓶子顶部颜色
     /// </summary>
     /// <returns></returns>
-    public string GetTopColor()
+    public ColorType GetTopColor()
     {
         if (colorStack.Count == 0)
-            return string.Empty;
+            return ColorType.None;
 
         return colorStack.Peek();
     }
@@ -74,7 +87,7 @@ public class Bottle
         }
 
         // 使用 HashSet 来计算唯一颜色的数量
-        var uniqueColors = new HashSet<string>();
+        var uniqueColors = new HashSet<ColorType>();
         foreach (var color in colorStack)
         {
             uniqueColors.Add(color);
@@ -138,7 +151,7 @@ public class Bottle
     /// 倒入颜色
     /// </summary>
     /// <param name="color"></param>
-    public void PoruIn(string color)
+    public void PoruIn(ColorType color)
     {
         colorStack.Push(color);
     }
@@ -284,7 +297,7 @@ public class BottleState
             var colors = bottle.colors;
             for (int i1 = colors.Length - 1; i1 >= 0; i1--)
             {
-                string color = colors[i1];
+                var color = colors[i1];
                 newBottles[i].AddColor(color);
             }
         }

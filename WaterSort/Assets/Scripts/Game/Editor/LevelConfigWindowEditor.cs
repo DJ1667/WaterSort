@@ -26,7 +26,7 @@ public class LevelConfigWindowEditor : OdinMenuEditorWindow
         tree.Config.DrawSearchToolbar = true;
 
         // Adds the level overview table.
-        tree.Add("LevelConfigs", null);
+        tree.Add("LevelConfigs", new LevelConfigCreateByExcelData());
         // Adds all characters.
         tree.AddAllAssetsAtPath("LevelConfigs", PathLevel, typeof(LevelConfig), true, true).SortMenuItemsByName();
         return tree;
