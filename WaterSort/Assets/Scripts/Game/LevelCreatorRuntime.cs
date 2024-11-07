@@ -94,6 +94,12 @@ public class LevelCreatorRuntime
         int tryCount = 1;
         while (!TestData(bottleDataList))
         {
+            if (tryCount > 500)
+            {
+                Debug.LogError($"<color=red>关卡{levelData.ID} 创建失败, 尝试超过500次</color>");
+                return null;
+            }
+
             tryCount++;
             colorPool.Clear();
             colorPool.AddRange(backupsColorPool);

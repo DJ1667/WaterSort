@@ -39,6 +39,8 @@ public class LevelConfigCreateByExcelData
             levelData.DegreeOfDifficulty = config.DegreeOfDifficulty;
 
             var bottleDataList = LevelCreatorRuntime.CreateLevelConfig(levelData);
+            if (bottleDataList == null) continue;
+
             var obj = ScriptableObject.CreateInstance(typeof(LevelConfig)) as LevelConfig;
             obj.bottleDataList = bottleDataList;
             var dest = $"Assets/AssetBundle/ScriptableObjects/LevelConfig/LevelConfig{i}.asset";
