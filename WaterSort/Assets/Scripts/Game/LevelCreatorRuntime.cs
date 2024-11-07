@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 public class LevelCreatorRuntime
@@ -10,7 +12,7 @@ public class LevelCreatorRuntime
         //加入除了None以外的所有颜色
         foreach (ColorType color in System.Enum.GetValues(typeof(ColorType)))
         {
-            if (color != ColorType.None)
+            if (color != ColorType.None && color != ColorType.Disable)
             {
                 AllColors.Add(color);
             }
@@ -132,6 +134,7 @@ public class LevelCreatorRuntime
             bottle.Segment = bottleData.Segment;
             foreach (var color in bottleData.Colors)
             {
+                if (color == ColorType.None || color == ColorType.Disable) continue;
                 bottle.AddColor(color);
             }
             bottleState.bottles[i] = bottle;
@@ -153,36 +156,4 @@ public class LevelConfigCreateData
     public int SingleColorBottleCount = 2; // 单色瓶子数量
     public int SingleColorSegment = 5; // 单色瓶子的段数
     public float DegreeOfDifficulty = 0.5f; // 难度
-}
-
-[System.Serializable]
-public class BottleData
-{
-    public BottleType bottleType = BottleType.Normal;
-    public ColorType BottleColor = ColorType.None;
-    public int Segment = 4;
-    public List<ColorType> Colors = new List<ColorType>();
-}
-
-public enum ColorType
-{
-    None,
-    // Red,
-    // Green,
-    // Blue,
-    // Yellow,
-    // Purple,
-    // Cyan,
-    // White,
-    // Black,
-    绿,
-    红,
-    黄,
-    深绿,
-    白,
-    蓝,
-    深蓝,
-    橙色,
-    紫色,
-
 }

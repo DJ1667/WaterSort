@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class LevelConfigWindowEditor : OdinMenuEditorWindow
 {
-    const string PathLevel = "AssetBundle/ScriptableObjects/LevelConfig";
+    const string PathLevel = "Assets/AssetBundle/ScriptableObjects/LevelConfig";
 
     [MenuItem("Tools/关卡编辑器")]
     private static void Open()
@@ -44,15 +44,32 @@ public class LevelConfigWindowEditor : OdinMenuEditorWindow
                 GUILayout.Label(selected.Name);
             }
 
-            if (SirenixEditorGUI.ToolbarButton(new GUIContent("新建关卡配置A")))
+            if (SirenixEditorGUI.ToolbarButton(new GUIContent("新建关卡配置")))
             {
+                var newId = -1;
                 var guids = AssetDatabase.FindAssets("t:LevelConfig", new string[] { PathLevel });
-                var newId = guids.Length + 1;
+
+                for (int i = 0; i < guids.Length; i++)
+                {
+                    var path = AssetDatabase.GUIDToAssetPath(guids[i]);
+                    var name = DUtils.GetFileName(path);
+                    var id = int.Parse(name.Replace("LevelConfig", ""));
+                    if (id != i + 1)
+                    {
+                        newId = i + 1;
+                        break;
+                    }
+                }
+
+                if (newId == -1)
+                    newId = guids.Length + 1;
 
                 var obj = ScriptableObject.CreateInstance(typeof(LevelConfig)) as LevelConfig;
                 var dest = $"Assets/AssetBundle/ScriptableObjects/LevelConfig/LevelConfig{newId}.asset";
+                AssetDatabase.DeleteAsset(dest);
                 AssetDatabase.CreateAsset(obj, dest);
                 AssetDatabase.Refresh();
+                Debug.Log($"新建关卡配置 ID: {newId}");
 
                 base.TrySelectMenuItemWithObject(obj);
             }

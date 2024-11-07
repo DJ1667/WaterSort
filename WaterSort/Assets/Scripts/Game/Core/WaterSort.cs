@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterSort
 {
-    public static List<BottleTransition> Solve(BottleState initState)
+    public static List<BottleTransition> Solve(BottleState initState, bool logStep = false)
     {
         System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
         stopwatch.Start();
@@ -60,10 +60,13 @@ public class WaterSort
 
                 resultList.Reverse();
 
-                for (int i = 1; i < resultList.Count; i++)
+                if (logStep)
                 {
-                    var transition = resultList[i];
-                    // Debug.Log($"第 {i} 步：从 {transition.fromBottleIndex + 1} 倒入 {transition.toBottleIndex + 1}");
+                    for (int i = 1; i < resultList.Count; i++)
+                    {
+                        var transition = resultList[i];
+                        Debug.Log($"第 {i} 步：从 {transition.fromBottleIndex + 1} 倒入 {transition.toBottleIndex + 1}");
+                    }
                 }
                 stopwatch.Stop();
                 Debug.Log($"<color=green>有解 => 总共耗时: {stopwatch.ElapsedMilliseconds}ms  --------->  计算了{count}次</color>");
@@ -86,7 +89,7 @@ public class WaterSort
         }
 
         stopwatch.Stop();
-        Debug.Log($"无解 =>总共耗时: {stopwatch.ElapsedMilliseconds}ms  --------->  计算了{count}次");
+        Debug.Log($"<color=red>无解 =>总共耗时: {stopwatch.ElapsedMilliseconds}ms  --------->  计算了{count}次</color>");
         // 无解
         return null;
     }

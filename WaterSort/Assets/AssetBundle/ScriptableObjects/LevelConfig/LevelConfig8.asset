@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cef77b1866da9b468ab5d7cf5d147ce, type: 3}
-  m_Name: LevelConfig2
+  m_Name: LevelConfig8
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -25,19 +25,23 @@ MonoBehaviour:
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 04000000060000000700000004000000
+    Colors: 06000000070000000300000007000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 06000000040000000600000006000000
+    Colors: 0800000007000000080000000a000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 04000000070000000700000003000000
+    Colors: 08000000060000000a00000006000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 03000000030000000300000007000000
+    Colors: 08000000030000000a00000007000000
+  - bottleType: 0
+    BottleColor: 0
+    Segment: 4
+    Colors: 0a000000060000000300000003000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4

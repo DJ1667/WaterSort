@@ -776,7 +776,7 @@ public static class DUtils
     {
         var tempIndex = path.LastIndexOf("/");
         var fileNameWithSuffix = path.Substring(tempIndex + 1);
-        var suffixIndex = path.LastIndexOf(".");
+        var suffixIndex = fileNameWithSuffix.LastIndexOf(".");
         var fileName = fileNameWithSuffix.Substring(0, suffixIndex);
 
         return fileName;

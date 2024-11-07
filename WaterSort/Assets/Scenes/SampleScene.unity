@@ -518,22 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd09bf3b8660ed4e94c81446f8cf453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BottleDataList:
-  - bottleType: 0
-    Segment: 4
-    Colors: 00000000000000000000000000000000
-  - bottleType: 0
-    Segment: 4
-    Colors: 00000000000000000000000000000000
-  - bottleType: 0
-    Segment: 4
-    Colors: 00000000000000000000000000000000
-  - bottleType: 0
-    Segment: 4
-    Colors: 
-  - bottleType: 0
-    Segment: 4
-    Colors: 
+  BottleDataList: []
   NeedStep: 500
 --- !u!4 &1275867915
 Transform:

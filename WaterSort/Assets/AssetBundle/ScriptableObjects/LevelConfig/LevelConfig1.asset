@@ -24,16 +24,16 @@ MonoBehaviour:
   bottleDataList:
   - bottleType: 0
     BottleColor: 0
-    Segment: 4
-    Colors: 03000000030000000700000005000000
+    Segment: 5
+    Colors: 08000000030000000700000007000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 07000000050000000300000007000000
+    Colors: 08000000080000000300000007000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 05000000070000000300000005000000
+    Colors: 03000000030000000800000007000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
