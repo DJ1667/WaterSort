@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+#if DOTWEEN
+using DG.Tweening;
+#endif
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -1720,6 +1723,35 @@ public static class DUtils
 
         return arr;
     }
+
+    #endregion
+
+    #region DoTween
+
+#if DOTWEEN
+
+    public static Sequence DoShakeY(this Transform target, float distance, float duration, int frequency = 6)
+    {
+        var sequence = DOTween.Sequence();
+        var originalVal = target.localPosition.y;
+        for (int i = 0; i < frequency; i++)
+        {
+            var rate = i / (float)frequency;
+
+            if (i % 2 == 0)
+            {
+                var offset = distance - (distance * rate);
+                sequence.Append(target.DOLocalMoveY(originalVal + offset, duration / frequency));
+                sequence.Append(target.DOLocalMoveY(originalVal, duration / frequency));
+            }
+        }
+
+        sequence.OnKill(() => { target.transform.localPosition = new Vector3(target.transform.localPosition.x, originalVal, target.transform.localPosition.z); });
+
+        return sequence;
+    }
+
+#endif
 
     #endregion
 }

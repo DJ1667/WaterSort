@@ -63,6 +63,19 @@ public class Bottle
         return true;
     }
 
+    public bool RemoveColor(ColorType color)
+    {
+        if (IsEmpty) return false;
+
+        if (colorStack.Peek().Equals(color))
+        {
+            colorStack.Pop();
+            return true;
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// 得到瓶子顶部颜色
     /// </summary>

@@ -10,35 +10,34 @@ public class LevelController : SingletonBase<LevelController>
 
     public void LoadLevel()
     {
-        // var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(LevelPath + "/LevelConfig1.asset");
-        // var bottlePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/AssetBundle/Prefabs/Bottle.prefab");
-        // var waterPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/AssetBundle/Prefabs/Water.prefab");
+        var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(LevelPath + "/LevelConfig1.asset");
+        var bottlePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/AssetBundle/Prefabs/Bottle.prefab");
+        var waterPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/AssetBundle/Prefabs/Water.prefab");
 
-        // for (int i = 0; i < levelConfig.BottleList.Count; i++)
-        // {
-        //     var colorList = levelConfig.BottleList[i];
-        //     var segment = levelConfig.BottleSegmentList[i];
-        //     var bottleObj = GameObject.Instantiate(bottlePrefab);
+        for (int i = 0; i < levelConfig.bottleDataList.Count; i++)
+        {
+            var bottleData = levelConfig.bottleDataList[i];
 
-        //     var yOffset = i / 5;
-        //     var xOffset = i % 5;
-        //     bottleObj.transform.position = new Vector3(-2 + xOffset, 1 + yOffset * (-4), 0);
-        //     var bottleMono = bottleObj.GetComponent<BottleMono>();
-        //     var bottle = new Bottle();
-        //     bottle.Segment = segment;
+            var colorList = bottleData.Colors;
+            var segment = bottleData.Segment;
+            var bottleObj = GameObject.Instantiate(bottlePrefab);
 
-        //     for (int j = 0; j < colorList.Count; j++)
-        //     {
-        //         var color = colorList[j];
-        //         var waterObj = GameObject.Instantiate(waterPrefab);
-        //         var waterMono = waterObj.GetComponent<WaterMono>();
-        //         waterMono.Init(color);
-        //         waterObj.transform.SetParent(bottleObj.transform);
-        //         waterObj.transform.localPosition = new Vector3(0, 0.5f * j, 0);
-        //         bottle.AddColor(color);
-        //     }
+            var yOffset = i / 5;
+            var xOffset = i % 5;
+            bottleObj.transform.position = new Vector3(-12 + xOffset * 6, 5 + yOffset * (-23), 0);
+            var bottleMono = bottleObj.GetComponent<BottleMono>();
+            var bottle = new Bottle();
+            bottle.Segment = segment;
+            bottleMono.Init(bottle, i);
 
-        //     bottleMono.Init(bottle);
-        // }
+            for (int j = 0; j < colorList.Count; j++)
+            {
+                var color = colorList[j];
+                var waterObj = GameObject.Instantiate(waterPrefab);
+                var waterMono = waterObj.GetComponent<WaterMono>();
+                waterMono.Init(color);
+                bottleMono.AddWater(waterMono, true);
+            }
+        }
     }
 }

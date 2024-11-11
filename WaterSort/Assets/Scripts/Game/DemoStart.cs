@@ -9,38 +9,39 @@ public class DemoStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // LevelController.Instance.LoadLevel();
+        LevelController.Instance.LoadLevel();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-
+            CheckBottle();
         }
     }
 
-    [ContextMenu("获得解法步骤")]
-    public void TestLevel()
+    #region 用户输入检测
+
+    BottleMono _lastBottleMono = null; //上一个点击的瓶子
+
+    public void CheckBottle()
     {
-        BottleState bottleState = new BottleState();
+        // 2D中射线检测用户点击的位置是否在瓶子上
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
+        if (hit.collider != null)
+        {
+            var bottleMono = hit.collider.GetComponent<BottleMono>();
+            if (bottleMono != null)
+            {
+                var lastBottleMono = _lastBottleMono;
+                bottleMono.OnBottleClick(lastBottleMono);
 
-        bottleState.bottles = new Bottle[12]{
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.绿, ColorType.红, ColorType.黄, ColorType.深绿}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.红, ColorType.白, ColorType.白, ColorType.深绿}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.绿, ColorType.蓝, ColorType.深蓝, ColorType.白}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.蓝, ColorType.深绿, ColorType.橙色, ColorType.蓝}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.深蓝, ColorType.紫色, ColorType.白, ColorType.深蓝}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.深蓝, ColorType.绿, ColorType.橙色, ColorType.黄}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.红, ColorType.紫色, ColorType.蓝, ColorType.橙色}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.橙色, ColorType.紫色, ColorType.紫色, ColorType.深绿}),
-            new Bottle(BottleType.Normal, 4, new ColorType[]{ColorType.红, ColorType.黄, ColorType.黄, ColorType.绿}),
-            new Bottle(BottleType.Normal, 4),
-            new Bottle(BottleType.Normal, 4),
-            new Bottle(BottleType.Normal, 2),
-        };
-
-        WaterSort.Solve(bottleState);
+                _lastBottleMono = bottleMono;
+            }
+        }
     }
+
+    #endregion
 }

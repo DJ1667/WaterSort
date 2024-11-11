@@ -129,8 +129,12 @@ public class LevelConfig : SerializedScriptableObject
             bottleState.bottles[i] = bottle;
         }
 
-        WaterSort.Solve(bottleState, true);
+        WaterSort.Solve(bottleState, showTestLog);
     }
+
+    [VerticalGroup("Buttons")]
+    [SerializeField, LabelText("显示步数日志")]
+    bool showTestLog = false;
 #endif
 }
 
