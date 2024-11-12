@@ -12,6 +12,44 @@ public class DemoStart : MonoBehaviour
         LevelController.Instance.LoadLevel();
     }
 
+    [ContextMenu("测试颜色随机打乱算法")]
+    private void TestShuffleWithIntensity()
+    {
+        List<int> list1 = new List<int>();
+        List<int> list2 = new List<int>();
+        for (int i = 1; i <= 9; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                list1.Add(i);
+                list2.Add(i);
+            }
+        }
+
+        DUtils.ShuffleWithIntensity1(list1, 0.8f);
+        DUtils.ShuffleWithIntensity2(list2, 0.8f);
+
+        string str = "";
+        for (int i = 0; i < list1.Count / 4; i++)
+        {
+            for (int j = i * 4; j < (i + 1) * 4; j++)
+            {
+                str += list1[j] + " ";
+            }
+
+            str += "    |    ";
+
+            for (int j = i * 4; j < (i + 1) * 4; j++)
+            {
+                str += list2[j] + " ";
+            }
+
+            str += "\n";
+        }
+
+        Debug.Log(str);
+    }
+
     // Update is called once per frame
     void Update()
     {

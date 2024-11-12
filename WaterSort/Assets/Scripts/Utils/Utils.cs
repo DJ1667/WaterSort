@@ -66,7 +66,7 @@ public static class DUtils
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="intensity"></param>
-    public static void ShuffleWithIntensity<T>(List<T> list, float intensity)
+    public static void ShuffleWithIntensity1<T>(List<T> list, float intensity)
     {
         int n = list.Count;
         int maxSwaps = (int)(n * intensity);  // 根据打乱程度调整交换次数
@@ -78,6 +78,22 @@ public static class DUtils
             T temp = list[index1];
             list[index1] = list[index2];
             list[index2] = temp;
+        }
+    }
+
+    public static void ShuffleWithIntensity2<T>(List<T> list, float intensity)
+    {
+        int n = list.Count;
+
+        for (int i = n - 1; i > 0; i--)
+        {
+            if (Random.value < intensity)
+            {
+                int k = Random.Range(0, i + 1);
+                T temp = list[i];
+                list[i] = list[k];
+                list[k] = temp;
+            }
         }
     }
 

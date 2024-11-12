@@ -48,7 +48,7 @@ public class LevelCreatorRuntime
         }
 
         //打乱颜色
-        DUtils.ShuffleWithIntensity(colorPool, levelData.DegreeOfDifficulty);
+        DUtils.ShuffleWithIntensity1(colorPool, levelData.DegreeOfDifficulty);
 
         //将颜色填充到瓶子中
         for (int i = 0; i < levelData.BottleCount; i++)
@@ -105,7 +105,7 @@ public class LevelCreatorRuntime
             tryCount++;
             colorPool.Clear();
             colorPool.AddRange(backupsColorPool);
-            DUtils.ShuffleWithIntensity(colorPool, levelData.DegreeOfDifficulty);
+            DUtils.ShuffleWithIntensity1(colorPool, levelData.DegreeOfDifficulty);
 
             for (int i = 0; i < levelData.BottleCount; i++)
             {
