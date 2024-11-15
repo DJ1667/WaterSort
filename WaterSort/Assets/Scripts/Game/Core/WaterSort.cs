@@ -99,7 +99,7 @@ public class WaterSort
         List<BottleTransition> options = new List<BottleTransition>();
 
         var bottleNum = currentTransition.doneState.bottles.Length;
-        HashSet<string> optionsHash = new HashSet<string>();
+        // HashSet<string> optionsHash = new HashSet<string>();
 
         var tempBottleState = currentTransition.doneState.Clone();
         int tempPortoutNum = 0;
@@ -117,8 +117,8 @@ public class WaterSort
                     var tempHash = tempBottleState.CalculateHashString();
                     var tempComplexity = tempBottleState.CalculateComplexity();
 
-                    if (!optionsHash.Contains(tempHash))
-                    {
+                    // if (!optionsHash.Contains(tempHash))
+                    // {
                         var newTransition = currentTransition.Clone();
                         newTransition.parent = currentTransition;
                         newTransition.doneState.PourOut(i, j);
@@ -127,9 +127,9 @@ public class WaterSort
                         newTransition.step++;
                         newTransition.UpdateTransition(tempHash, tempComplexity);
 
-                        optionsHash.Add(newTransition.stateHash);
+                        // optionsHash.Add(newTransition.stateHash);
                         options.Add(newTransition);
-                    }
+                    // }
 
                     //还原临时状态
                     tempBottleState.ForceBackPourOut(i, j, tempPortoutNum);
