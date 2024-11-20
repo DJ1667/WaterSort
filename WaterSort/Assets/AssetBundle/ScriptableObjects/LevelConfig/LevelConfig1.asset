@@ -25,31 +25,43 @@ MonoBehaviour:
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 0a0000000b0000000900000007000000
+    Colors: 0d0000000a0000000600000009000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 0800000005000000020000000b000000
+    Colors: 08000000070000000300000002000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 0b000000070000000700000009000000
+    Colors: 0d00000006000000070000000a000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 08000000050000000b00000008000000
+    Colors: 090000000a0000000b00000007000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 05000000020000000900000002000000
+    Colors: 080000000b0000000400000003000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 02000000090000000a00000008000000
+    Colors: 020000000d0000000800000007000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
-    Colors: 0a0000000a0000000500000007000000
+    Colors: 08000000040000000600000006000000
+  - bottleType: 0
+    BottleColor: 0
+    Segment: 4
+    Colors: 0a000000030000000300000004000000
+  - bottleType: 0
+    BottleColor: 0
+    Segment: 4
+    Colors: 0d0000000b0000000900000002000000
+  - bottleType: 0
+    BottleColor: 0
+    Segment: 4
+    Colors: 09000000020000000b00000004000000
   - bottleType: 0
     BottleColor: 0
     Segment: 4
@@ -58,3 +70,4 @@ MonoBehaviour:
     BottleColor: 0
     Segment: 4
     Colors: 
+  showTestLog: 1

@@ -48,7 +48,8 @@ public class LevelCreatorRuntime
         }
 
         //打乱颜色
-        DUtils.ShuffleWithIntensity1(colorPool, levelData.DegreeOfDifficulty);
+        // DUtils.ShuffleWithIntensity1(colorPool, levelData.DegreeOfDifficulty);
+        ShuffleList2(colorPool, levelData.DegreeOfDifficulty, levelData.Segment);
 
         //将颜色填充到瓶子中
         for (int i = 0; i < levelData.BottleCount; i++)
@@ -58,6 +59,9 @@ public class LevelCreatorRuntime
                 bottleDataList[i].Colors.Add(colorPool[i * levelData.Segment + j]);
             }
         }
+
+        //打乱瓶子顺序
+        DUtils.FisherYatesShuffle(bottleDataList);
 
         //创建空瓶子
         for (int i = 0; i < levelData.EmptyBottleCount; i++)
@@ -141,7 +145,149 @@ public class LevelCreatorRuntime
         }
 
         var result = WaterSort.Solve(bottleState);
+        Debug.Log("解出需要步数: " + result.Count);
         return result != null;
+    }
+
+    private static void ShuffleList(List<ColorType> list, int complexity, int segment)
+    {
+        List<HashSet<ColorType>> colorSets = new List<HashSet<ColorType>>();
+        var bottleCount = list.Count / segment;
+        var complexCount = (int)(complexity / 10 * bottleCount);
+        int index = 0;
+        colorSets.Add(new HashSet<ColorType>());
+        Debug.Log($"bottleCount: {bottleCount} complexity: {complexity}  complexCount: {complexCount}");
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            if (colorSets[index].Count == segment)
+            {
+                index++;
+                colorSets.Add(new HashSet<ColorType>());
+            }
+
+            int j = Random.Range(0, i + 1);
+            if (index < complexCount)
+            {
+                while (colorSets[index].Contains(list[j]))
+                {
+                    j++;
+                    if (j > i)
+                    {
+                        j = 0;
+                    }
+                    j = Random.Range(0, i + 1);
+                }
+            }
+
+            var temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+
+            colorSets[index].Add(list[i]);
+        }
+    }
+
+    private static void ShuffleList2(List<ColorType> list, int complexity, int segment)
+    {
+        var bottleCount = list.Count / segment;
+
+        //瓶底颜色最多重复次数
+        var maxSameColorNum = segment - 1;
+        // 有多少种颜色的最大沉底 保证并非所有瓶子都是三种颜色
+        var maxSameColorCount = bottleCount % maxSameColorNum == 0 ? (bottleCount / maxSameColorNum - 1) : bottleCount / maxSameColorNum;
+        //根据难度决定最大沉底颜色数量
+        maxSameColorCount = (int)(maxSameColorCount * (complexity / 10f));
+
+        if (maxSameColorCount < 7) maxSameColorCount = 0;
+
+        List<List<ColorType>> colorSets = new List<List<ColorType>>();
+        var complexCount = (int)(complexity / 10f * bottleCount);
+        int index = 0;
+        colorSets.Add(new List<ColorType>());
+
+        int n = 0;
+        bool haveSameColor = false;
+        for (int i = list.Count - 1; i > 0; i--, n++)
+        {
+            if (colorSets[index].Count == segment)
+            {
+                index++;
+                colorSets.Add(new List<ColorType>());
+                haveSameColor = false;
+            }
+            if (index > 0 && index % maxSameColorNum == 0 && colorSets[index].Count == 0)
+                maxSameColorCount--;
+
+            int j = Random.Range(0, i + 1);
+
+            if (maxSameColorCount > 0 && n % segment == 0)
+            {
+                var sameIndex = index / maxSameColorNum * maxSameColorNum;
+                if (index != sameIndex)
+                {
+                    var tempN = sameIndex * segment;
+                    var tempI = list.Count - 1 - tempN;
+                    j = DUtils.GetSameElement(list, list[tempI], 0, i);
+
+                    if (j == -1)
+                    {
+                        j = Random.Range(0, i + 1);
+                    }
+
+                    // Debug.Log($"maxSameColorCount:{maxSameColorCount}  瓶子{index} 重复瓶子{sameIndex} 颜色 {list[tempI]} - {list[j]}  第{n}个颜色-> {n % segment}");
+                }
+            }
+
+            //在复杂度范围内
+            if (index < complexCount)
+            {
+                int randomCount = 0;
+                while (colorSets[index].Contains(list[j]))
+                {
+
+                    if (randomCount < 10)
+                    {
+                        j = Random.Range(0, i + 1);
+                        randomCount++;
+                    }
+                    else
+                    {
+                        j++;
+                        if (j > i)
+                        {
+                            j = 0;
+                        }
+                    }
+                }
+            }
+            //否则简单点
+            else
+            {
+                //排除瓶子底部
+                var bti = colorSets[index].Count; //该色块在瓶子中的的位置
+                if (bti != 0 && !haveSameColor)
+                {
+                    //使得非复杂瓶子一定有相同颜色
+                    if (Random.Range(bti, segment) == (segment - 1))
+                    {
+                        var t = DUtils.GetSameElement(list, colorSets[index][Random.Range(0, bti)], 0, i);
+                        if (t != -1)
+                        {
+                            j = t;
+                            haveSameColor = true;
+                        }
+                    }
+                }
+            }
+
+            var temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+
+            colorSets[index].Add(list[i]);
+        }
+
+        list.Reverse();
     }
 }
 
@@ -155,5 +301,5 @@ public class LevelConfigCreateData
     public int TempSegment = 5; // 临时瓶子的段数
     public int SingleColorBottleCount = 2; // 单色瓶子数量
     public int SingleColorSegment = 5; // 单色瓶子的段数
-    public float DegreeOfDifficulty = 0.5f; // 难度
+    public int DegreeOfDifficulty = 5; // 难度
 }

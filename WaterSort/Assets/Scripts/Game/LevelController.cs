@@ -8,9 +8,16 @@ public class LevelController : SingletonBase<LevelController>
 {
     readonly string LevelPath = "Assets/AssetBundle/ScriptableObjects/LevelConfig";
 
+    private GameObject LevelRoot = null;
+
     public void LoadLevel()
     {
-        var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(LevelPath + "/LevelConfig1.asset");
+        if (LevelRoot != null)
+            GameObject.Destroy(LevelRoot);
+
+        LevelRoot = new GameObject("LevelRoot");
+
+        var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(LevelPath + "/LevelConfig10.asset");
         var bottlePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/AssetBundle/Prefabs/Bottle.prefab");
         var waterPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/AssetBundle/Prefabs/Water.prefab");
 
@@ -21,10 +28,11 @@ public class LevelController : SingletonBase<LevelController>
             var colorList = bottleData.Colors;
             var segment = bottleData.Segment;
             var bottleObj = GameObject.Instantiate(bottlePrefab);
+            bottleObj.transform.SetParent(LevelRoot.transform);
 
-            var yOffset = i / 5;
-            var xOffset = i % 5;
-            bottleObj.transform.position = new Vector3(-12 + xOffset * 6, 5 + yOffset * (-23), 0);
+            var yOffset = i / 6;
+            var xOffset = i % 6;
+            bottleObj.transform.position = new Vector3(-12 - 2 + xOffset * 5.5f, 5 + yOffset * (-23), 0);
             var bottleMono = bottleObj.GetComponent<BottleMono>();
             var bottle = new Bottle();
             bottle.Segment = segment;

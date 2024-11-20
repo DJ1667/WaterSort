@@ -33,9 +33,11 @@ public class BottleMono : MonoBehaviour
 
         waterMono.transform.SetParent(transform);
         if (isInit)
+        {
             waterMono.transform.localPosition = new Vector3(0, WaterMono.OriginY + WaterMono.Height * _waterMonoList.Count, 0);
+            waterMono.ChangeOrder(_waterMonoList.Count);
+        }
         _waterMonoList.Add(waterMono);
-        waterMono.ChangeOrder(_waterMonoList.Count);
         AddColor(waterMono.Color);
     }
 
@@ -169,10 +171,13 @@ public class BottleMono : MonoBehaviour
 
             //数据先行
             RemoveWater(water);
+            var order = bottleMono._waterMonoList.Count;
             bottleMono.AddWater(water);
+            water.ChangeOrder(water.Order + 20);
 
             water.transform.DOPath(path, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
             {
+                water.ChangeOrder(order);
                 if (index == waterList.Count - 1)
                     LastWaterShake(water, () => { bottleMono._isPourIning = false; });
             });

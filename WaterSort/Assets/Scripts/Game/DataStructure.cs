@@ -48,6 +48,25 @@ public class MinHeap<T> where T : IComparable<T>
         return min;
     }
 
+    public void Remove(T value)
+    {
+        int index = heap.IndexOf(value);
+        if (index == -1)
+        {
+            Debug.LogError("Value not found.");
+            return;
+        }
+
+        heap[index] = heap[heap.Count - 1];
+        heap.RemoveAt(heap.Count - 1);
+        HeapifyDown(index);
+    }
+
+    public bool Contains(T value)
+    {
+        return heap.Contains(value);
+    }
+
     /// <summary>
     /// 获取最小元素
     /// </summary>

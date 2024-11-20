@@ -21,7 +21,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 2
     BottleCount: 4
     EmptyBottleCount: 2
@@ -30,7 +30,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 3
     BottleCount: 4
     EmptyBottleCount: 2
@@ -39,7 +39,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 4
     BottleCount: 4
     EmptyBottleCount: 2
@@ -48,7 +48,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 5
     BottleCount: 4
     EmptyBottleCount: 2
@@ -57,7 +57,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 6
     BottleCount: 5
     EmptyBottleCount: 2
@@ -66,7 +66,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 7
     BottleCount: 5
     EmptyBottleCount: 2
@@ -75,7 +75,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 8
     BottleCount: 5
     EmptyBottleCount: 2
@@ -84,7 +84,7 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 9
     BottleCount: 5
     EmptyBottleCount: 2
@@ -93,13 +93,13 @@ MonoBehaviour:
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 8
   - Id: 10
-    BottleCount: 7
+    BottleCount: 9
     EmptyBottleCount: 2
     Segment: 4
     TempBottleCount: 0
     TempSegment: 0
     SingleColorBottleCount: 0
     SingleColorSegment: 0
-    DegreeOfDifficulty: 5
+    DegreeOfDifficulty: 6

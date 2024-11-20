@@ -113,6 +113,7 @@ public class LevelConfig : SerializedScriptableObject
     {
         BottleState bottleState = new BottleState();
         bottleState.bottles = new Bottle[bottleDataList.Count];
+        Dictionary<ColorType, int> colorCount = new Dictionary<ColorType, int>();
 
         for (int i = 0; i < bottleDataList.Count; i++)
         {
@@ -125,10 +126,25 @@ public class LevelConfig : SerializedScriptableObject
                 ColorType color = bottleData.Colors[i1];
                 if (color == ColorType.None || color == ColorType.Disable) continue;
                 bottle.AddColor(color);
+
+                if (colorCount.ContainsKey(color))
+                    colorCount[color]++;
+                else
+                    colorCount[color] = 1;
             }
             bottleState.bottles[i] = bottle;
         }
 
+        bool error = false;
+        foreach (var color in colorCount)
+        {
+            Debug.Log($"Color: {color.Key} Count: {color.Value}");
+            if (color.Value != bottleDataList[0].Segment)
+                error = true;
+        }
+        if (error) return;
+
+        Debug.Log("--------------步数开始--------------");
         WaterSort.Solve(bottleState, showTestLog);
     }
 
@@ -168,8 +184,9 @@ public enum ColorType
     白,
     蓝,
     深蓝,
-    橙色,
-    紫色,
-    粉色,
-
+    橙,
+    紫,
+    粉,
+    黑,
+    浅粉
 }

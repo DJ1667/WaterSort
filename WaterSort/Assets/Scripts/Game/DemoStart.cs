@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Profiling;
 
 public class DemoStart : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         LevelController.Instance.LoadLevel();
@@ -56,6 +58,11 @@ public class DemoStart : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             CheckBottle();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            LevelController.Instance.LoadLevel();
         }
     }
 

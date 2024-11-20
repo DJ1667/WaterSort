@@ -13,6 +13,41 @@ public static class DUtils
     #region 列表
 
     /// <summary>
+    /// 返回第一个相同元素的下标
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="element"></param>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <returns></returns>
+    public static int GetSameElement<T>(List<T> list, T element, int start, int end)
+    {
+        for (int i = start; i < end; i++)
+        {
+            if (list[i].Equals(element))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /// <summary>
+    /// 返回第一个相同元素的下标
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="element"></param>
+    /// <param name="start"></param>
+    /// <returns></returns>
+    public static int GetSameElement<T>(List<T> list, T element, int start = 0)
+    {
+        return GetSameElement(list, element, start, list.Count);
+    }
+
+    /// <summary>
     /// 随机获取列表中的元素
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -95,6 +130,84 @@ public static class DUtils
                 list[k] = temp;
             }
         }
+    }
+
+    /// <summary>
+    /// 判断元素在列表中是否相邻
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="isOrder">是否严格按照 a->b 的顺序 </param>
+    /// <returns></returns>
+    public static bool IsNeighborInList<T>(List<T> list, T a, T b, bool isOrder = false)
+    {
+        for (int i = 0; i < list.Count - 1; i++)
+        {
+            var v = list[i];
+
+            if (v.Equals(a))
+            {
+                if (list[i + 1].Equals(b))
+                {
+                    return true;
+                }
+            }
+            else if (!isOrder && v.Equals(b))
+            {
+                if (list[i + 1].Equals(a))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 判断元素在列表中是否相邻
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="isOrder">是否严格按照 a->b 的顺序 </param>
+    /// <returns></returns>
+    public static bool IsNeighborInList<T>(IEnumerable<T> list, T a, T b, bool isOrder = false)
+    {
+        using (var enumerator = list.GetEnumerator())  // 获取列表的枚举器
+        {
+            T current = default;  // 当前元素
+            T next = default;     // 下一个元素
+
+            // 获取第一个元素
+            if (enumerator.MoveNext())
+            {
+                current = enumerator.Current;
+
+                // 逐个遍历
+                while (enumerator.MoveNext())
+                {
+                    next = enumerator.Current;
+
+                    if (current.Equals(a) && next.Equals(b))  // 顺序判断
+                    {
+                        return true;
+                    }
+
+                    if (!isOrder && current.Equals(b) && next.Equals(a))  // 无序判断
+                    {
+                        return true;
+                    }
+
+                    current = next;  // 更新当前元素
+                }
+            }
+        }
+
+        return false;
     }
 
     #endregion
@@ -1768,6 +1881,12 @@ public static class DUtils
     }
 
 #endif
+
+    #endregion
+
+    #region  基础类型
+
+    public static bool Approx(this float f1, float f2) => Mathf.Approximately(f1, f2);
 
     #endregion
 }
